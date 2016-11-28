@@ -21,7 +21,7 @@
     when: ansible_distribution == 'Debian'
 
   - name: Install deb
-    apt: deb={{ dropbox_link }}
+    apt: deb={{ dropbox_link }} validate_certs=false
     become: true
 
   when: installed|failed
