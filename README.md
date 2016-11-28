@@ -1,5 +1,8 @@
-Role Name
+Ansible Role: Dropbox
 =========
+
+[![Build Status](https://travis-ci.org/patrick-hill/ansible-role-dropbox.svg?branch=master)](https://travis-ci.org/patrick-hill/ansible-role-dropbox)
+
 
 Installs [DropBox](https://www.dropbox.com) on Debian based OS.
 
