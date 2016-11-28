@@ -1,0 +1,28 @@
+galaxy_info:
+  author: Patrick-Hill
+  description: Installs Dropbox deamon on Debian/Ubuntu
+
+  license: BSD
+
+  min_ansible_version: 1.8
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+    - utopic
+    - vivid
+    - wily
+    - xenial
+    - yakkety
+  - name: Debian
+    versions:
+    - squeeze
+    - stretch
+    - wheezy
+
+  galaxy_tags:
+    - cloud
+    - storage
+
+dependencies: []

@@ -1,0 +1,31 @@
+---
+- name: Check if dropbox is installed
+  command: dpkg-query -W dropbox
+  register: installed
+  failed_when: installed.rc > 1
+  changed_when: installed.rc == 1
+
+- block:
+  - name: Install dependencies
+    apt: pkg={{ item }} state=installed
+    with_items:
+      - python-gpgme
+    become: true
+
+  - name: Set Ubuntu Download Link
+    set_fact: dropbox_link={{ dropbox_link_ubuntu }}
+    when: ansible_distribution in [ 'Ubuntu', 'Linuxmint' ]
+
+  - name: Set Debian Download Link
+    set_fact: dropbox_link={{ dropbox_link_debian }}
+    when: ansible_distribution == 'Debian'
+
+  - name: Install deb
+    apt: deb={{ dropbox_link }}
+    become: true
+
+  when: installed|failed
+
+# No longer working ;(
+# - name: Install the deamon
+#   shell: "dropbox start -i"

@@ -1,0 +1,3 @@
+---
+dropbox_link_ubuntu: https://linux.dropbox.com/packages/ubuntu/dropbox_{{ dropbox_version }}_amd64.deb
+dropbox_link_debian: https://www.dropbox.com/download?dl=packages/debian/dropbox_{{ dropbox_version }}_amd64.deb
