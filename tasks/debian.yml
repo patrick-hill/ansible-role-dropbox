@@ -20,8 +20,12 @@
     set_fact: dropbox_link={{ dropbox_link_debian }}
     when: ansible_distribution == 'Debian'
 
+  # Calls get_url which fails due to low python version
+  # which can't resolve SNI thus breaking SSL
+  # Workaround is to download specifically with: validate_certs=false
+  # or use wget/curl which support SNI
   - name: Install deb
-    apt: deb={{ dropbox_link }} validate_certs=false
+    apt: deb={{ dropbox_link }}
     become: true
 
   when: installed|failed
