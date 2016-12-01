@@ -10,6 +10,7 @@
     apt: pkg={{ item }} state=installed update_cache=yes
     with_items:
       - python-gpgme
+      - pyopenssl
     become: true
 
   - name: Set Ubuntu Download Link
