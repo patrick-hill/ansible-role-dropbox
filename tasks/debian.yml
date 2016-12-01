@@ -23,13 +23,14 @@
   ############################################################
   ##  WORKAROUND FOR CERT ERRORS WITH PYTHON < 2.7.9
   ############################################################
-  - name: Install wget
+  - name: Install wget (cert workaround)
     apt: pkg=wget state=installed
 
   - name: Download dropbox deb (cert workaround)
-    command: wget -q -o /tmp/dropbox.deb {{ dropbox_link }}
+    command:  wget -q -O /tmp/dropbox.deb {{ dropbox_link }}
+              creates=/tmp/dropbox.deb
 
-  - name: Install deb
+  - name: Install deb (cert workaround)
     apt: deb=/tmp/dropbox.deb
     become: true
   ############################################################
