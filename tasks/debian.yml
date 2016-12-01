@@ -20,9 +20,9 @@
     set_fact: dropbox_link={{ dropbox_link_debian }}
     when: ansible_distribution == 'Debian'
 
-  ##########################################################33
+  ############################################################
   ##  WORKAROUND FOR CERT ERRORS WITH PYTHON < 2.7.9
-  ##########################################################33
+  ############################################################
   - name: Install wget
     apt: pkg=wget state=installed
 
@@ -32,9 +32,9 @@
   - name: Install deb
     apt: deb=/tmp/dropbox.deb
     become: true
-  ##########################################################33
+  ############################################################
   ##  END WORKAROUND
-  ##########################################################33
+  ############################################################
   # Calls get_url which fails due to low python version
   # which can't resolve SNI thus breaking SSL
   # Workaround is to download specifically with: validate_certs=false
@@ -45,6 +45,8 @@
 
   when: installed|failed
 
-# No longer working ;(
-# - name: Install the deamon
+  ############################################################
+  ##  This used to launch the UI, doesn't appear to work now
+  ############################################################
+  # - name: Install the deamon
 #   shell: "dropbox start -i"
