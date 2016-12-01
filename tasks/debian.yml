@@ -7,7 +7,7 @@
 
 - block:
   - name: Install dependencies
-    apt: pkg={{ item }} state=installed
+    apt: pkg={{ item }} state=installed update_cache=yes
     with_items:
       - python-gpgme
     become: true
