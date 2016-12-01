@@ -10,7 +10,6 @@
     apt: pkg={{ item }} state=installed update_cache=yes
     with_items:
       - python-gpgme
-      - pyopenssl
     become: true
 
   - name: Set Ubuntu Download Link
@@ -24,15 +23,15 @@
   ##########################################################33
   ##  WORKAROUND FOR CERT ERRORS WITH PYTHON < 2.7.9
   ##########################################################33
-#  - name: Install wget
-#    apt: pkg=wget state=installed
-#
-#  - name: Download dropbox deb (cert workaround)
-#    command: wget -q -o /tmp/dropbox.deb {{ dropbox_link }}
-#
-#  - name: Install deb
-#    apt: deb=/tmp/dropbox.deb
-#    become: true
+  - name: Install wget
+    apt: pkg=wget state=installed
+
+  - name: Download dropbox deb (cert workaround)
+    command: wget -q -o /tmp/dropbox.deb {{ dropbox_link }}
+
+  - name: Install deb
+    apt: deb=/tmp/dropbox.deb
+    become: true
   ##########################################################33
   ##  END WORKAROUND
   ##########################################################33
@@ -40,13 +39,9 @@
   # which can't resolve SNI thus breaking SSL
   # Workaround is to download specifically with: validate_certs=false
   # or use wget/curl which support SNI
-  - name: Update python
-    apt: pkg=python state=latest
-    become: true
-
-  - name: Install deb
-    apt: deb={{ dropbox_link }}
-    become: true
+#  - name: Install deb
+#    apt: deb={{ dropbox_link }}
+#    become: true
 
   when: installed|failed
 
