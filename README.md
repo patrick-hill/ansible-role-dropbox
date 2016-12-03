@@ -2,6 +2,7 @@ Ansible Role: Dropbox
 =========
 
 [![Build Status](https://travis-ci.org/patrick-hill/ansible-role-dropbox.svg?branch=master)](https://travis-ci.org/patrick-hill/ansible-role-dropbox)
+[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-patrick--hill.dropbox-blue.svg)](https://galaxy.ansible.com/patrick-hill/dropbox)
 
 
 Installs [DropBox](https://www.dropbox.com) on Debian based OS.
