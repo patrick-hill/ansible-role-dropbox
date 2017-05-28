@@ -1,4 +1,5 @@
 ---
+
 - name: Check if dropbox is installed
   command: dpkg-query -W dropbox
   register: installed
@@ -6,8 +7,12 @@
   changed_when: installed.rc == 1
 
 - block:
+
   - name: Install dependencies
-    apt: pkg={{ item }} state=installed update_cache=yes
+    apt:
+      pkg: "{{ item }}"
+      state: installed
+      update_cache: yes
     with_items:
       - python-gpgme
     become: true
@@ -24,11 +29,14 @@
   ##  WORKAROUND FOR CERT ERRORS WITH PYTHON < 2.7.9
   ############################################################
   - name: Install wget (cert workaround)
-    apt: pkg=wget state=installed
+    apt:
+      pkg: wget
+      state: installed
 
   - name: Download dropbox deb (cert workaround)
     command:  wget -q -O /tmp/dropbox.deb {{ dropbox_link }}
-              creates=/tmp/dropbox.deb
+    args:
+      creates: /tmp/dropbox.deb
 
   - name: Install deb (cert workaround)
     apt: deb=/tmp/dropbox.deb
@@ -43,6 +51,26 @@
 #  - name: Install deb
 #    apt: deb={{ dropbox_link }}
 #    become: true
+  
+  - name: Wait for - configs dir - User Must Run 'dropbox start -i'
+    wait_for:
+      path: /home/vagrant/Dropbox/0-Backups/configs
+      state: present
+
+  ############################################################
+  ##  Issues.... uggghhhhhh
+  ## This should technically work but for some reason,
+  ## The command returns: Dropbox isn't running
+  ## I've tried all I can think of to no avail....
+  ## From here on out, assume sync is complete
+  ############################################################
+  # - name: Ping Dropbox until Backups are sync'd (Up to 10 minutes wait time!)
+  #   shell: python /home/vagrant/Dropbox/0-Backups/dropbox.py filestatus -a /home/vagrant/Dropbox/0-Backups/configs
+  #   register: dropbox_sync
+  #   until: dropbox_sync.stdout.find('up to date') != -1
+  #   retries: 300
+  #   delay: 2
+  #   become: true
 
   when: installed|failed
 
