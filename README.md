@@ -15,9 +15,14 @@ Ansible 1.8+
 Role Variables
 --------------
 
+The below are defined in vars and defaults: `vars/main.yml and defaults/main.yml`:
+
     dropbox_version
 "dropbox_version" is the dropbox version to install
-    
+
+    dropbox_interactive_install
+"dropbox_interactive_install" determines if you want Ansible to wait for you to run the manual command `dropbox start -i` on the target machien to complete the run
+
 Dependencies
 ------------
 
@@ -28,6 +33,8 @@ Example Playbook
 
     - hosts: localhost
       gather_facts: yes
+      vars:
+        dropbox_interactive_install: true
       roles:
          - role: patrick-hill.dropbox 
 

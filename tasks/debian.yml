@@ -54,8 +54,9 @@
   
   - name: Wait for - configs dir - User Must Run 'dropbox start -i'
     wait_for:
-      path: /home/vagrant/Dropbox/0-Backups/configs
+      path: /home/{{ os_username }}/Dropbox/0-Backups/configs
       state: present
+    when: dropbox_interactive_install
 
   ############################################################
   ##  Issues.... uggghhhhhh
@@ -73,6 +74,15 @@
   #   become: true
 
   when: installed|failed
+
+  rescue:
+    - name: ERRORED - Remove Packages
+      apt:
+        pkg: "{{ item }}"
+        state: absent
+      with_items:
+        - python-gpgme
+        - dropbox
 
   ############################################################
   ##  This used to launch the UI, doesn't appear to work now
